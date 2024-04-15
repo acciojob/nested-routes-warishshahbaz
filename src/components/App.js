@@ -8,20 +8,19 @@ import {
 } from "react-router-dom";
 import CategoryList from "./CategoryList ";
 import ItemList from "./ItemList ";
+import Layout from "./Layout";
 
 const App = () => {
   return (
     <div>
-      <Router>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<CategoryList category="men" />} />
-            <Route path="/categories/:category" element={<CategoryList />}>
-              <Route path="items/:itemId" element={<ItemList />} />
-            </Route>
-          </Routes>
-        </Layout>
-      </Router>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<CategoryList category="men" />} />
+          <Route path="/categories/:category" element={<CategoryList />}>
+            <Route path="items/:itemId" element={<ItemList />} />
+          </Route>
+        </Routes>
+      </Layout>
     </div>
   );
 };
