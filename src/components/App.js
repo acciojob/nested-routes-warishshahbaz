@@ -1,28 +1,79 @@
-import React, { useEffect } from "react";
-import "./../styles/App.css";
+import React from "react";
+import "../styles/App.css";
+
 import {
-  BrowserRouter as Router,
+  Link,
+  unstable_HistoryRouter as HistoryRouter,
   Routes,
   Route,
-  useNavigate,
+  Outlet,
 } from "react-router-dom";
-import CategoryList from "./CategoryList ";
-import ItemList from "./ItemList ";
-import Layout from "./Layout";
 
-const App = () => {
+import { createBrowserHistory } from "history";
+
+function Layout() {
+  return (
+    <>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/women">Women</Link>
+          </li>
+        </ul>
+      </nav>
+      <main>
+        <Outlet />
+      </main>
+    </>
+  );
+}
+
+function Index() {
+  return <div>Index</div>;
+}
+
+function Women() {
   return (
     <div>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<CategoryList category="men" />} />
-          <Route path="/categories/:category" element={<CategoryList />}>
-            <Route path="items/:itemId" element={<ItemList />} />
-          </Route>
-        </Routes>
-      </Layout>
+      Women Items:
+      <ul>
+        <li>
+          <Link to="Grooming">Grooming</Link>
+        </li>
+        <li>
+          <Link to="Shirt">Shirt</Link>
+        </li>
+        <li>
+          <Link to="Trouser">Trouser</Link>
+        </li>
+        <li>
+          <Link to="Jewellery">Jewellery</Link>
+        </li>
+      </ul>
+      <Routes>
+        <Route path="Grooming" element={<div>Grooming</div>} />
+        <Route path="Shirt" element={<div>Shirt</div>} />
+        <Route path="Trouser" element={<div>Trouser</div>} />
+        <Route path="Jewellery" element={<div>Jewellery</div>} />
+      </Routes>
     </div>
   );
-};
+}
 
-export default App;
+export default function App() {
+  const history = createBrowserHistory();
+
+  return (
+    <HistoryRouter history={history}>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Index />} />
+          <Route path="/women/*" element={<Women />} />
+        </Route>
+      </Routes>
+    </HistoryRouter>
+  );
+}
